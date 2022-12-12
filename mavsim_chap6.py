@@ -82,7 +82,7 @@ while sim_time < SIM.end_time:
 
     # ---s----physical system-------------
     if sim_time > 14:
-        current_wind = np.array([[random.randint(0,9), 1, 1, 0, random.randint(0,9), 0]]).T  # get the new wind vector
+        current_wind = np.array([[random.randint(-3,3), random.randint(-1,1), random.randint(-2,2), random.randint(-3,3), random.randint(-3,3), random.randint(-2,2)]]).T  # get the new wind vector
     else:
         current_wind = np.array([[0, 0, 0, 0, 0, 0]]).T  # get the new wind vector
 
