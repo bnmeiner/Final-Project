@@ -24,6 +24,10 @@ course_kp = (2 * zeta_course * wn_course * Va0 / gravity)
 course_ki = (wn_course**2 * Va0 / gravity) 
 
 #----------yaw damper-------------
+sideslip_kp = 0.5  # (old) 1/0.5
+sideslip_ki = 0.01 # (old) 0.5
+
+#----------sideslip loop-------------
 yaw_damper_p_wo = 0.45  # (old) 1/0.5
 yaw_damper_kr = 0.2  # (old) 0.5
 

@@ -19,6 +19,9 @@ from autopilot import Autopilot
 #from chap6.autopilot_tecs import Autopilot
 from tools.signals import Signals
 import random
+import pyqtgraph as pg
+import pyqtgraph.opengl as gl
+
 # initialize the visualization
 VIDEO = False  # True==write video, False==don't write video
 mav_view = MavViewer()  # initialize the mav viewer
@@ -54,26 +57,30 @@ course_command = Signals(dc_offset=np.radians(180),
 # initialize the simulation time
 sim_time = SIM.start_time
 
+delta_history = np.array([[0, 0, 0, 0]]).T
 # main simulation loop
 print("Press Command-Q to exit...")
 while sim_time < SIM.end_time:
     # -------autopilot commands-------------
-    commands.airspeed_command = 20 #Va_command.square(sim_time)
+    commands.airspeed_command = 14 #Va_command.square(sim_time)
     commands.course_command = 0 #course_command.square(sim_time)
     commands.altitude_command = 10 #altitude_command.square(sim_time)
     if sim_time > 4: 
-        commands.airspeed_command = 35 #Va_command.square(sim_time)
+        commands.airspeed_command = 23 #Va_command.square(sim_time)
         commands.course_command = 0 #course_command.square(sim_time)
         commands.altitude_command = 20 #altitude_command.square(sim_time)
     if sim_time > 7:
-        commands.airspeed_command = 50 #Va_command.square(sim_time)
+        commands.airspeed_command = 35 #Va_command.square(sim_time)
         commands.course_command = np.pi/4 #course_command.square(sim_time)
         commands.altitude_command = 45 #altitude_command.square(sim_time)
     # -------autopilot-------------
     estimated_state = mav.true_state  # uses true states in the control
     delta, commanded_state = autopilot.update(commands, estimated_state)
 
-    # -------physical system-------------
+    print(delta)
+    np.append(delta_history, delta)
+
+    # ---s----physical system-------------
     if sim_time > 14:
         current_wind = np.array([[random.randint(0,9), 1, 1, 0, random.randint(0,9), 0]]).T  # get the new wind vector
     else:
@@ -83,7 +90,7 @@ while sim_time < SIM.end_time:
 
     # -------update viewer-------------
     mav_view.update(mav.true_state)  # plot body of MAV
-    
+
     if VIDEO is True:
         video.update(sim_time)
 
@@ -92,6 +99,7 @@ while sim_time < SIM.end_time:
 
 if VIDEO is True:
     video.close()
+
 
 
 

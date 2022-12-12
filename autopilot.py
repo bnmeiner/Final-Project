@@ -32,7 +32,12 @@ class Autopilot:
         self.yaw_damper = transferFunction(
                         num=np.array([[AP.yaw_damper_kr, 0]]),
                         den=np.array([[1, AP.yaw_damper_p_wo]]),
-                        Ts=ts_control)
+                        Ts=ts_control) 
+        self.sideslip_from_rudder = PIControl(
+                        kp=AP.sideslip_kp,
+                        ki=AP.sideslip_ki,
+                        Ts=ts_control,
+                        limit=np.radians(45)) 
 
         # instantiate lateral controllers
         self.pitch_from_elevator = PDControlWithRate(
@@ -61,8 +66,9 @@ class Autopilot:
         phi_c = self.course_from_roll.update(chi_c, state.chi)   
         #Based on commanded roll angle, apply controls on it to get aileron setting 
         delta_a = self.roll_from_aileron.update(phi_c, state.phi, state.p) 
-        #RUDDER NOT AVAILABLE
-        delta_r = 0 #self.yaw_damper(state.r)
+
+        #stabilize sideslip to zero 
+        delta_r = self.sideslip_from_rudder.update(0,state.beta)
 
         ################ longitudinal autopilot #######################
         

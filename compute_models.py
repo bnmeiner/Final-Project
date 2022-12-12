@@ -8,15 +8,12 @@ import sys
 sys.path.append('..')
 import numpy as np
 from scipy.optimize import minimize
-from UAVBook_references.tools.rotations import Euler2Quaternion, Quaternion2Euler
-import UAVBook_references.parameters.aerosonde_parameters as MAV
-from UAVBook_references.parameters.simulation_parameters import ts_simulation as Ts
-from UAVBook_references.message_types.msg_delta import MsgDelta
-import model_coef as coef
+from tools.rotations import Euler2Quaternion, Quaternion2Euler
+import parameters.aerosonde_parameters as MAV
+from parameters.simulation_parameters import ts_simulation as Ts
+from message_types.msg_delta import MsgDelta
 import control.matlab as mt
-import UAVBook_references.parameters.control_parameters as AP
-import sympy as sp
-s = sp.symbols('s')
+import parameters.control_parameters as AP
 
 def compute_tf_model(mav, trim_state, trim_input):
     # trim values

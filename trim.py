@@ -11,9 +11,9 @@ sys.path.append('..')
 sys.path.append('.')
 import numpy as np
 from scipy.optimize import minimize
-from UAVBook_references.tools.rotations import Euler2Quaternion
-from UAVBook_references.message_types.msg_delta import MsgDelta  
-import BLACKBIRD_Code.blackbird_dynamics_v2 as dynamics
+from tools.rotations import Euler2Quaternion
+from message_types.msg_delta import MsgDelta  
+from mav_dynamics import MavDynamics
 
 def compute_trim(mav, Va, gamma):
     # define initial state and input

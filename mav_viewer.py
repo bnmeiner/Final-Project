@@ -33,6 +33,8 @@ class MavViewer():
         self.plot_initialized = False # has the mav been plotted yet?
         self.mav_plot = []
 
+    
+
     def update(self, state):
         # initialize the drawing the first time update() is called
         if not self.plot_initialized:

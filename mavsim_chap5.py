@@ -9,21 +9,22 @@ sys.path.append('..')
 sys.path.append('.')
 import numpy as np
 
-import UAVBook_references.parameters.simulation_parameters as SIM
-from UAVBook_references.chap2.mav_viewer import MavViewer
+import parameters.simulation_parameters as SIM
+from mav_viewer import MavViewer
 #from UAVBook_references.chap3.data_viewer import DataViewer
-from UAVBook_references.chap4.mav_dynamics import MavDynamics
+from mav_dynamics import MavDynamics
 # DONT INCLUDE WIND SIMULATINO from chap4.wind_simulation import WindSimulation
-from UAVBook_references.chap5.trim import compute_trim
-from UAVBook_references.chap5.compute_models import compute_tf_model
-from UAVBook_references.tools.signals import Signals
+from trim import compute_trim
+from compute_models import compute_tf_model
+from tools.signals import Signals
+import random
 
 # initialize the visualization
 VIDEO = False  # True==write video, False==don't write video
 mav_view = MavViewer()  # initialize the mav viewer
 #data_view = DataViewer()  # initialize view of data plots
 if VIDEO is True:
-    from chap2.video_writer import VideoWriter
+    from video_writer import VideoWriter
     video = VideoWriter(video_name="chap5_video.avi",
                         bounding_box=(0, 0, 1000, 1000),
                         output_rate=SIM.ts_video)
@@ -33,8 +34,8 @@ if VIDEO is True:
 mav = MavDynamics(SIM.ts_simulation)
 
 # use compute_trim function to compute trim state and trim input
-Va = 50.
-gamma = np.pi/4.
+Va = 25.
+gamma = 0 #np.pi/4.
 trim_state, trim_input = compute_trim(mav, Va, gamma)
 mav._state = trim_state  # set the initial state of the mav to the trim state
 delta = trim_input  # set input to constant constant trim input
@@ -57,6 +58,8 @@ while sim_time < SIM.end_time:
     # -------physical system-------------
     #current_wind = wind.update()  # get the new wind vector
     current_wind = np.zeros((6, 1))
+    #current_wind = np.array([[random.randint(0,9), 1, 1, 0, 0, random.randint(0,9)]]).T  # get the new wind vector
+
     # this input excites the phugoid mode by adding an impulse at t=5.0
     # delta.elevator += input_signal.impulse(sim_time)
     # delta.rudder += input_signal.doublet(sim_time)
