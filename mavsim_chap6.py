@@ -18,7 +18,7 @@ from mav_dynamics import MavDynamics
 from autopilot import Autopilot
 #from chap6.autopilot_tecs import Autopilot
 from tools.signals import Signals
-
+import random
 # initialize the visualization
 VIDEO = False  # True==write video, False==don't write video
 mav_view = MavViewer()  # initialize the mav viewer
@@ -57,27 +57,33 @@ sim_time = SIM.start_time
 # main simulation loop
 print("Press Command-Q to exit...")
 while sim_time < SIM.end_time:
-
     # -------autopilot commands-------------
-    commands.airspeed_command = 25 #Va_command.square(sim_time)
-    commands.course_command = np.pi/4 #course_command.square(sim_time)
-    commands.altitude_command = 50 #altitude_command.square(sim_time)
-
+    commands.airspeed_command = 20 #Va_command.square(sim_time)
+    commands.course_command = 0 #course_command.square(sim_time)
+    commands.altitude_command = 10 #altitude_command.square(sim_time)
+    if sim_time > 4: 
+        commands.airspeed_command = 35 #Va_command.square(sim_time)
+        commands.course_command = 0 #course_command.square(sim_time)
+        commands.altitude_command = 20 #altitude_command.square(sim_time)
+    if sim_time > 7:
+        commands.airspeed_command = 50 #Va_command.square(sim_time)
+        commands.course_command = np.pi/4 #course_command.square(sim_time)
+        commands.altitude_command = 45 #altitude_command.square(sim_time)
     # -------autopilot-------------
     estimated_state = mav.true_state  # uses true states in the control
     delta, commanded_state = autopilot.update(commands, estimated_state)
 
     # -------physical system-------------
-    current_wind = np.array([[0, 0, 0, 0, 0, 0]]).T  # get the new wind vector
+    if sim_time > 14:
+        current_wind = np.array([[random.randint(0,9), 1, 1, 0, random.randint(0,9), 0]]).T  # get the new wind vector
+    else:
+        current_wind = np.array([[0, 0, 0, 0, 0, 0]]).T  # get the new wind vector
+
     mav.update(delta, current_wind)  # propagate the MAV dynamics
 
     # -------update viewer-------------
     mav_view.update(mav.true_state)  # plot body of MAV
-    #update(mav.true_state,  # true states
-                     #estimated_state,  # estimated states
-                     #commanded_state,  # commanded states
-                     #delta,  # input to aircraft
-                     #SIM.ts_simulation)
+    
     if VIDEO is True:
         video.update(sim_time)
 

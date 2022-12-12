@@ -9,8 +9,8 @@ from tools.rotations import Euler2Quaternion
 #   Initial conditions for MAV
 north0 = 0.  # initial north position
 east0 = 0.  # initial east position
-down0 = -20  # initial down position
-u0 = 0.  # initial velocity along body x-axis
+down0 = -10  # initial down position
+u0 = 10.  # initial velocity along body x-axis
 v0 = 0.  # initial velocity along body y-axis
 w0 = 0.  # initial velocity along body z-axis
 phi0 = 0.  # initial roll angle
