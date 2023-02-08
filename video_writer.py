@@ -5,7 +5,7 @@ mavsimPy: video making function
         1/10/2019 - RWB
 """
 import numpy as np
-import cv2
+#import cv2
 from PIL import ImageGrab
 
 

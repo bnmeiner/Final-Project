@@ -242,7 +242,7 @@ class MavDynamics:
         My = RVS*MAV.c*Cm
         # compute lateral torques in body frame
         Cell = (MAV.C_ell_0) + (MAV.C_ell_beta*beta)+(MAV.C_ell_p*p*MAV.b*VC) + (MAV.C_ell_r*r*MAV.b*VC) + (MAV.C_ell_delta_a*delta[1]) + (MAV.C_ell_delta_r*delta[2])
-        Mx = RVS*MAV.b*Cell #+ torque_prop
+        Mx = RVS*MAV.b*Cell + torque_prop
         Cn = (MAV.C_n_0) + (MAV.C_n_beta*beta) + (MAV.C_n_p*p*MAV.b*VC) + (MAV.C_n_r*r*MAV.b*VC) + (MAV.C_n_delta_a*delta[1]) + (MAV.C_n_delta_r*delta[2])
         Mz = RVS*MAV.b*Cn
 

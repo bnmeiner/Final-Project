@@ -61,6 +61,7 @@ delta_history = np.array([[0, 0, 0, 0]]).T
 # main simulation loop
 print("Press Command-Q to exit...")
 while sim_time < SIM.end_time:
+  
     # -------autopilot commands-------------
     commands.airspeed_command = 14 #Va_command.square(sim_time)
     commands.course_command = 0 #course_command.square(sim_time)
@@ -69,7 +70,7 @@ while sim_time < SIM.end_time:
         commands.airspeed_command = 23 #Va_command.square(sim_time)
         commands.course_command = 0 #course_command.square(sim_time)
         commands.altitude_command = 20 #altitude_command.square(sim_time)
-    if sim_time > 7:
+    if sim_time > 9:
         commands.airspeed_command = 35 #Va_command.square(sim_time)
         commands.course_command = np.pi/4 #course_command.square(sim_time)
         commands.altitude_command = 45 #altitude_command.square(sim_time)
@@ -81,7 +82,7 @@ while sim_time < SIM.end_time:
     np.append(delta_history, delta)
 
     # ---s----physical system-------------
-    if sim_time > 14:
+    if sim_time > 16:
         current_wind = np.array([[random.randint(-3,3), random.randint(-1,1), random.randint(-2,2), random.randint(-3,3), random.randint(-3,3), random.randint(-2,2)]]).T  # get the new wind vector
     else:
         current_wind = np.array([[0, 0, 0, 0, 0, 0]]).T  # get the new wind vector
@@ -91,7 +92,7 @@ while sim_time < SIM.end_time:
     # -------update viewer-------------
     mav_view.update(mav.true_state)  # plot body of MAV
 
-    if VIDEO is True:
+    if VIDEO is True:   
         video.update(sim_time)
 
     # -------increment time-------------

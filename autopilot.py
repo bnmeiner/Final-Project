@@ -16,7 +16,6 @@ from pd_control_with_rate import PDControlWithRate
 from message_types.msg_state import MsgState
 from message_types.msg_delta import MsgDelta
 
-
 class Autopilot:
     def __init__(self, ts_control):
         # instantiate lateral controllers
@@ -29,10 +28,10 @@ class Autopilot:
                         ki=AP.course_ki,
                         Ts=ts_control,
                         limit=np.radians(30))
-        self.yaw_damper = transferFunction(
-                        num=np.array([[AP.yaw_damper_kr, 0]]),
-                        den=np.array([[1, AP.yaw_damper_p_wo]]),
-                        Ts=ts_control) 
+        #self.yaw_damper = transferFunction(
+                       # num=np.array([[AP.yaw_damper_kr, 0]]),
+                       # den=np.array([[1, AP.yaw_damper_p_wo]]),
+                       # Ts=ts_control) 
         self.sideslip_from_rudder = PIControl(
                         kp=AP.sideslip_kp,
                         ki=AP.sideslip_ki,

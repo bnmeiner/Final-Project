@@ -9,16 +9,16 @@ sys.path.append('..')
 sys.path.append('.')
 import numpy as np
 
-import UAVBook_references.parameters.simulation_parameters as SIM
-from UAVBook_references.chap2.mav_viewer import MavViewer
-#from UAVBook_references.chap3.data_viewer import DataViewer
-from UAVBook_references.chap4.mav_dynamics import MavDynamics
+import parameters.simulation_parameters as SIM
+from mav_viewer import MavViewer
+#from data_viewer import DataViewer
+from mav_dynamics import MavDynamics
 # DONT INCLUDE WIND SIMULATINO from chap4.wind_simulation import WindSimulation
-from UAVBook_references.chap5.trim import compute_trim
-from UAVBook_references.chap5.compute_models import compute_tf_model
-from UAVBook_references.tools.signals import Signals
+from trim import compute_trim
+from compute_models import compute_tf_model
+from tools.signals import Signals
 import control.matlab as mt
-import UAVBook_references.parameters.control_parameters as AP
+import parameters.control_parameters as AP
 import matplotlib.pyplot as plt
 
 
